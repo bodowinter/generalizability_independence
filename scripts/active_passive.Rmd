@@ -1,0 +1,114 @@
+---
+title: "Active & passive example: aggregate versus multilevel analysis"
+author: "anonymous"
+date: "03/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This analysis is a dataset analogous to Table 1, but with more variation added (otherwise terms become inestimable). The point of this analysis is to show how a summary analysis of Table 1 (binomial test, Chi-square test, Fisher's exact test etc.) yields a significant result that goes away once a multilevel is fitted that accounts for by-speaker variation.
+
+## Prelims:
+
+Load packages:
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(brms)
+```
+
+Load mock data:
+
+```{r, warning = FALSE, message = FALSE}
+voice <- read_csv('../data/active_passive_example.csv')
+```
+
+## Faulty aggregate analysis
+
+Aggregate over individuals:
+
+```{r}
+counts <- voice %>% select(active:passive) %>% 
+  summarize(active = sum(active),
+            passive = sum(passive)) %>% unlist() %>% as.vector()
+```
+
+Check counts:
+
+```{r}
+counts
+```
+
+Perform a binomial test:
+
+```{r}
+binom.test(counts)
+```
+
+## Generalized linear model accounting for by-speaker variation
+
+Next we fit a GLM for which the data needs to be represented in a different way (in long format):
+
+```{r}
+voice_long <- voice %>%
+  pivot_longer(active:passive,
+               names_to = 'voice',
+               values_to = 'count')
+```
+
+Check:
+
+```{r}
+voice_long
+```
+
+Fit a glm, in this case a Poisson model since the response variable in question is a count variable.
+
+```{r}
+# Run chains in parallel:
+options(mc.cores = parallel::detectCores())
+
+pois_mdl <- brm(count ~ voice + (1 + voice|speaker),
+                data = voice_long,
+                family = poisson,
+                
+                # Prior:
+                prior = c(prior(normal(0, 1), class = b)),
+                
+                # MCMC control parameters:
+                seed = 666,
+                init = 0,
+                chains = 4,
+                warmup = 4000, iter = 6000,
+                control = list(adapt_delta = 0.99,
+                               max_treedepth = 13))
+```
+
+Check:
+
+```{r}
+summary(pois_mdl)
+```
+
+Not a lot of evidence for this effect anymore after speaker information has been incorporated.
+
+Assess the posterior probability of the voice effect:
+
+```{r}
+posts <- posterior_samples(pois_mdl)$b_voicepassive
+sum(posts > 0) / length(posts)
+```
+
+Again show that there is not a lot of evidence for the active vs. passive difference anymore.
+
+
+
+
+
+
+

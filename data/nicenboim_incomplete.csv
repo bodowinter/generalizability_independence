@@ -1,0 +1,25 @@
+﻿short_name,name,publication,study,population,elicitation_method,material,prosodic_position,speaker_no,pairs_no,rep,stimuli_type
+PO85,Port & O‚ÄôDell (1985),Port_ODell_1985,1,German (living in the US),read list,isolated words,phrase-final,10,10,1,words
+PC89,Port & Crawford (1989),Port_Crawford_1989,1,German,read list,embedded,word-final,5,3,1,words
+PC89,Port & Crawford (1989),Port_Crawford_1989,1,German,repeat,embedded,word-final,5,3,1,words
+PC89,Port & Crawford (1989),Port_Crawford_1989,1,German,read contrastive,embedded,phrase-final,5,3,1,words
+PC89,Port & Crawford (1989),Port_Crawford_1989,1,German,dictate contrastive,embedded,mixed,5,3,1,words
+PC89,Port & Crawford (1989),Port_Crawford_1989,1,German,read list,isolated words,phrase-final,5,3,1,words
+M81,Mitleb (1981),Mitleb_1981,1,German (living in the US),read list,isolated words,phrase-final,10,3,1,words and non words
+G01,Greisbach (2001),Greisbach_2001,1,German,read list,embedded,word-final,12,3,2,words
+G01,Greisbach (2001),Greisbach_2001,1,German,read contrastive,embedded,mixed,12,3,2,words
+F05,Fuchs (2005),Fuchs_2005,1,German,read contrastive,embedded,word-final,3,3,15,non words
+FI84,Fourakis & Iverson (1984),Fourakis_Iverson_1984,1,German (living in the US),elicit sentence,embedded,phrase-final,4,3,6,words
+FI84,Fourakis & Iverson (1984),Fourakis_Iverson_1984,1,German (living in the US),read list,isolated words,phrase-final,4,5,6,words
+C85,Charles-Luce (1985),Charles-Luce_1985,1,German,read list,embedded,word-final,5,4,2,words
+C85,Charles-Luce (1985),Charles-Luce_1985,1,German,read list,embedded,phrase-final,5,4,2,words
+Rea14_1,Roettger et al. (2014) Exp 1,Roettger_etal_2014,1,German,elicit sentence,embedded,word-final,16,24,1,non words
+Rea14_2,Roettger et al. (2014) Exp 2,Roettger_etal_2014,2,German,elicit sentence,embedded,word-final,16,12,1,non words
+PJ04,Piroth & Janker (2004),Piroth_Janker_2004,1,German,read list,embedded,syllable-final,6,13,3,words
+PJ04,Piroth & Janker (2004),Piroth_Janker_2004,1,German,read list,embedded,word-final,6,13,3,words
+PJ04,Piroth & Janker (2004),Piroth_Janker_2004,1,German,read list,embedded,phrase-final,6,13,3,words
+B_1,Baer-Henney & Roettger (2017) Exp 1,Baer-Henney_unpublished,1,German,elicit sentence,embedded,word-final,79,34,1,non words
+Sea09,Smith et al. (2009),Smith_etal_2009,1,German (living in the US),read list,embedded,mixed,13,13,1,words
+G14,Grawunder (2014),Grawunder_2014,1,German,elicit sentence,embedded,word-final,10,28,1,non word
+G14,Grawunder (2014),Grawunder_2014,2,Austrian German,elicit sentence,embedded,word-final,9,28,1,non word
+B_2,Baer-Henney & Roettger (2017) Exp 2,Baer-Henney_unpublished,1,German,elicit sentence,embedded,word-final,65,21,1,non words

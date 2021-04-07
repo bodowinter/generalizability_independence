@@ -1,0 +1,154 @@
+---
+title: "Counts of phonetics papers with exact repetitions"
+author: "anonymous"
+date: "07/04/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This markdown reports summary counts for exact repetitions (Section 3.7) in the paper, specifically, taken from:
+
+- Roettger and Gordon (2017)
+- Nicenboim et al. (2018)
+- Winter (2015)
+- 2019 issues in JPhon and Language & Speech
+
+## Load data
+
+Load packages:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+```
+
+Load the data:
+
+```{r, message = FALSE, warning = FALSE}
+nicenboim <- read_csv('../data/nicenboim_incomplete.csv')
+winter <- read_csv('../data/JPHon_2014_analysis.csv')
+gordon <- read_csv('../data/Gordon&Roettger_Stress Corpus.csv')
+newdata <- read_csv('../data/repetition_check_2019_jphon_language&speech.csv')
+```
+
+## Roettger and Gordon (2017)
+
+For this dataset, repetition == 1 is no repetition.
+
+```{r}
+gordon <- gordon %>%
+  mutate(YesNo = ifelse(repetitions > 1, 'yes', 'no'))
+```
+
+Count:
+
+```{r}
+gordon %>% 
+  count(YesNo) %>% 
+  mutate(sum = sum(n))
+```
+
+Correlate word count with repetition count:
+
+```{r}
+with(gordon, cor(no_words, repetitions,
+                 method = 'spearman', use = 'complete.obs'))
+```
+
+This is quite worrisome. Researchers seem to trade number of items with number of repetitions.
+
+## Nicenboim et al. (2018)
+
+Counter variable:
+
+```{r}
+nicenboim <- nicenboim %>% 
+  mutate(YesNo = ifelse(rep > 1, 'yes', 'no'))
+```
+
+And count:
+
+```{r}
+nicenboim %>%
+  count(YesNo) %>% 
+  mutate(sum = sum(n))
+```
+
+Correlate with number of pairs:
+
+```{r}
+with(nicenboim,
+     cor(pairs_no, rep, method = 'spearman', use = 'complete.obs'))
+```
+
+## JPhon 2014 from Winter (2015)
+
+Get only the experimental studies:
+
+```{r}
+winter <- winter %>% 
+  mutate(repetitions = as.numeric(repetitions)) %>% 
+  filter(!is.na(repetitions))
+```
+
+Look at the raw values:
+
+```{r}
+winter$repetitions
+```
+
+Create a counter variable whether there were repetitions or not:
+
+```{r}
+winter <- mutate(winter,
+                 YesNo = ifelse(repetitions > 0, 'yes', 'no'))
+```
+
+Count:
+
+```{r}
+winter %>% count(YesNo)
+```
+
+How many unique items for those studies?
+
+```{r}
+as.numeric(winter$unique_items)
+```
+
+How many have less than five items?
+
+```{r}
+sum(as.numeric(winter$unique_items) < 5, na.rm = TRUE)
+```
+
+Correlate the two:
+
+```{r}
+with(winter, cor(repetitions, as.numeric(unique_items),
+                 method = 'spearman', use = 'complete.obs'))
+```
+
+## New sample of JPhon and Language and Speech (all 2019 issues)
+
+There is a difference between this data and the others in that we didn't read the whole papers but searched for 'repeat___' and 'repet___'.
+
+```{r}
+newdata %>%
+  mutate(YesNo = !is.na(N_rep)) %>% 
+  summarize(N = sum(YesNo))
+```
+
+Out of:
+
+```{r}
+nrow(newdata)
+```
+
+
+
+
